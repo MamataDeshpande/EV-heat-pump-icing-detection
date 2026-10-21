@@ -102,7 +102,7 @@ The intended benefit is to support more timely icing assessment and better-infor
 
 ## Future Work
 
-The thesis identifies broader testing across temperatures and operating conditions, improved robustness during changing vehicle states, and potential real-time integration into automotive control systems as further development steps.
+This thesis has established a foundational framework for an AI-based icing detection system designed for outdoor heat exchangers (OHX) under specific temperature conditions. The thesis identifies broader testing across temperatures and operating conditions, improved robustness during changing vehicle states, and potential real-time integration into automotive control systems as further development steps.
 
 ## Research Outcome
 
