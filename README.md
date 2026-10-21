@@ -26,6 +26,10 @@ The refrigerant absorbs heat from the ambient air through the OHX, is compressed
 
 ## Research Work
 
+<p align="center">
+<img width="481" height="112" alt="Data Processing Workflow" src="https://github.com/user-attachments/assets/81f09aaf-897f-48d7-b5eb-2e36cf5f505d" />
+</p>
+
 The project involved analyzing automotive measurement data, developing a proof-of-concept classification approach using Python and machine learning, and evaluating the approach within the available research conditions.
 
 The study demonstrated the potential of data-driven methods for thermal-system diagnostics. Further validation across different environmental and vehicle operating conditions would be required before any production application.
@@ -45,49 +49,46 @@ The research followed a supervised machine-learning workflow:
 3. **Model training:** An XGBoost classifier was used to learn patterns distinguishing the two classes.
 4. **Evaluation:** Model predictions were assessed against labelled measurements, with further validation needed across different operating conditions.
 
-### Python Example — Synthetic Data Only
+<p align="center">
+<img width="485" height="173" alt="Measured Variables" src="https://github.com/user-attachments/assets/2279a5be-cb2c-48ee-b682-dd32e2a3549a" />
+</p>
 
-The snippets below demonstrate the **general principle of binary classification**, using randomly generated numerical features. They are independent examples, **not code from the thesis**, and do not reproduce the actual vehicle data, sensor identifiers, model settings, or patented implementation.
 
-**1. Generate example features and labels**
 
-```python
-from sklearn.datasets import make_classification
 
-X, y = make_classification(
-    n_samples=200,
-    n_features=3,
-    n_informative=2,
-    n_redundant=0,
-    random_state=42
-)
-```
+### Measurement Data Processing
 
-**2. Train and evaluate an example classifier**
+<p align="center">
+<img width="497" height="170" alt="Code Libraries" src="https://github.com/user-attachments/assets/c1642b48-a322-494c-b282-f422b860c0af" />
+</p>
+
+
+Vehicle measurement data was processed using Python and the `asammdf` library. The workflow involved reading MF4 measurement files, resampling the data, and preparing labelled datasets for machine-learning analysis.
+
+**Example: Reading and resampling an MF4 file**
 
 ```python
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-from xgboost import XGBClassifier
+from asammdf import MDF
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.20, random_state=42
-)
-
-model = XGBClassifier(
-    n_estimators=20,
-    max_depth=2,
-    eval_metric="logloss",
-    random_state=42
-)
-
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
-
-print(classification_report(y_test, predictions))
+def read_mf4(file_path, sample_rate):
+    mdf = MDF(file_path)
+    mdf = mdf.resample(sample_rate)
+    df = mdf.to_dataframe()
+    return df
 ```
 
-This toy example uses independently generated samples. Automotive time-series models require more rigorous validation using separate vehicle recordings. No results from this example should be interpreted as performance achieved in the thesis.
+**Example: Adding a classification label**
+
+```python
+def add_condition_label(df, label):
+    labelled_data = df.copy()
+    labelled_data["condition_label"] = label
+    return labelled_data
+```
+
+For binary classification, labels represent two conditions: icing (1) and non-icing (0).
+
+
 
 ## Comparison with Conventional Detection
 
