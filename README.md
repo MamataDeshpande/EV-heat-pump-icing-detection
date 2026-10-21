@@ -89,6 +89,20 @@ print(classification_report(y_test, predictions))
 
 This toy example uses independently generated samples. Automotive time-series models require more rigorous validation using separate vehicle recordings. No results from this example should be interpreted as performance achieved in the thesis.
 
+## Comparison with Conventional Detection
+
+| Rule-based approach | Machine-learning approach |
+| --- | --- |
+| Uses predefined conditions and thresholds. | Learns icing-related patterns from measurement data. |
+| Often needs manual adjustment for new conditions. | Can be updated using additional labelled data. |
+| Detection depends on satisfying fixed rules. | May support more flexible detection, subject to further validation. |
+
+The intended benefit is to support more timely icing assessment and better-informed defrost decisions. Energy savings and improved performance across all operating conditions remain **potential benefits**, not demonstrated production results.
+
+## Future Work
+
+The thesis identifies broader testing across temperatures and operating conditions, improved robustness during changing vehicle states, and potential real-time integration into automotive control systems as further development steps.
+
 ## Research Outcome
 
 The work contributed to research associated with a **published Mercedes-Benz patent application**. This repository presents a high-level overview of my master's research rather than its technical implementation.
