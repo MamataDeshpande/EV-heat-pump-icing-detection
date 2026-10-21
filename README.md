@@ -36,6 +36,59 @@ The study demonstrated the potential of data-driven methods for thermal-system d
   <img src="https://github.com/user-attachments/assets/6b0b871e-fbf5-4221-819b-de6cdbc0162d" alt="High-level machine-learning modelling workflow" width="520">
 </p>
 
+### Modelling Approach
+
+The research followed a supervised machine-learning workflow:
+
+1. **Data preparation:** Recorded vehicle measurements were processed in Python and relevant signals were aligned for analysis.
+2. **Labelling:** Measurement samples were grouped into iced and non-iced conditions.
+3. **Model training:** An XGBoost classifier was used to learn patterns distinguishing the two classes.
+4. **Evaluation:** Model predictions were assessed against labelled measurements, with further validation needed across different operating conditions.
+
+### Python Example — Synthetic Data Only
+
+The snippets below demonstrate the **general principle of binary classification**, using randomly generated numerical features. They are independent examples, **not code from the thesis**, and do not reproduce the actual vehicle data, sensor identifiers, model settings, or patented implementation.
+
+**1. Generate example features and labels**
+
+```python
+from sklearn.datasets import make_classification
+
+X, y = make_classification(
+    n_samples=200,
+    n_features=3,
+    n_informative=2,
+    n_redundant=0,
+    random_state=42
+)
+```
+
+**2. Train and evaluate an example classifier**
+
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+from xgboost import XGBClassifier
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.20, random_state=42
+)
+
+model = XGBClassifier(
+    n_estimators=20,
+    max_depth=2,
+    eval_metric="logloss",
+    random_state=42
+)
+
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+
+print(classification_report(y_test, predictions))
+```
+
+This toy example uses independently generated samples. Automotive time-series models require more rigorous validation using separate vehicle recordings. No results from this example should be interpreted as performance achieved in the thesis.
+
 ## Research Outcome
 
 The work contributed to research associated with a **published Mercedes-Benz patent application**. This repository presents a high-level overview of my master's research rather than its technical implementation.
